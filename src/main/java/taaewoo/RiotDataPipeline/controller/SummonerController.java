@@ -17,6 +17,8 @@ public class SummonerController {
     @ResponseBody
     public SummonerDTO callSummonerByName(String summonerName){
 
+        summonerName = summonerName.replaceAll(" ","%20");
+
         SummonerDTO apiResult = summonerService.callRiotAPISummonerByName(summonerName);
 
         return apiResult;

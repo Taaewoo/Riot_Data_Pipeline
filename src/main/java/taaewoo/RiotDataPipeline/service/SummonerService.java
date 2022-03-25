@@ -9,9 +9,9 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
-import taaewoo.RiotDataPipeline.dto.SummonerDTO;
-
 import java.io.IOException;
+
+import taaewoo.RiotDataPipeline.dto.SummonerDTO;
 
 @Service
 @PropertySource(ignoreResourceNotFound = false, value = "classpath:riotApiKey.properties")
@@ -37,16 +37,13 @@ public class SummonerService {
             HttpResponse response = client.execute(request);
 
             if(response.getStatusLine().getStatusCode() != 200){
-                System.out.println(response.getStatusLine().getStatusCode() + " not success!!@#!");
                 return null;
             }
 
             HttpEntity entity = response.getEntity();
             result = objectMapper.readValue(entity.getContent(), SummonerDTO.class);
-            System.out.println(result);
 
         } catch (IOException e){
-            System.out.println("IOException!!!!");
             e.printStackTrace();
             return null;
         }
