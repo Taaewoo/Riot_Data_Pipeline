@@ -1,8 +1,8 @@
-# Riot API 사용 예재 
+# Riot Data Pipeline
 
 ## Git clone
 ~~~
-$ git clone -b testCallSummoners https://github.com/Taaewoo/Riot_Data_Pipeline.git
+$ git clone https://github.com/Taaewoo/Riot_Data_Pipeline.git
 ~~~
 
 ## Riot API 파일 생성
