@@ -5,7 +5,7 @@
 $ git clone https://github.com/Taaewoo/Riot_Data_Pipeline.git
 ~~~
 
-## Riot API 파일 생성
+## Riot API Key 파일 생성
 ~~~
 $ vim src/main/resources/riotApiKey.properties
 ~~~
