@@ -32,8 +32,6 @@ public class SummonerService {
             HttpClient client = HttpClientBuilder.create().build();
             HttpGet request = new HttpGet(serverUrl + "/lol/summoner/v4/summoners/by-name/" + summonerName + "?api_key=" + mykey);
 
-            System.out.println(serverUrl + summonerName + "?api_key=" + mykey);
-
             HttpResponse response = client.execute(request);
 
             if(response.getStatusLine().getStatusCode() != 200){
