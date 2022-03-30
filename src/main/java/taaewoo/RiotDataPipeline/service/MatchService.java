@@ -30,7 +30,7 @@ public class MatchService {
 
         try {
             HttpClient client = HttpClientBuilder.create().build();
-            HttpGet request = new HttpGet(serverUrl + "/lol/match/v5/matches/by-puuid/" + puuid + "/ids?start=0&count=20" + "&api_key=" + mykey);
+            HttpGet request = new HttpGet(serverUrl + "/lol/match/v5/matches/by-puuid/" + puuid + "/ids?start=0&count=100" + "&api_key=" + mykey);
 
             HttpResponse response = client.execute(request);
 
