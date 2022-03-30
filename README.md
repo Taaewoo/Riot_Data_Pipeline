@@ -1,4 +1,5 @@
 # Riot Data Pipeline
+### [개발 과정 블로그 게시글](https://taaewoo.tistory.com/category/BigData%20Engineering/Riot%20Data%20Pipeline)을 참고하세요.
 
 ## Git clone
 ~~~
