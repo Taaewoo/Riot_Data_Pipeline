@@ -3,9 +3,11 @@ package taaewoo.RiotDataPipeline.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import taaewoo.RiotDataPipeline.dto.CommonResponse;
 import taaewoo.RiotDataPipeline.service.MatchService;
 
 @Slf4j
@@ -15,15 +17,14 @@ public class MatchController {
 
     private final MatchService matchService;
 
-
     @PostMapping(value = "/matchesByPuuid")
     @ResponseBody
-    public String[] callMatchesByPuuid(String puuid){
+    public CommonResponse callMatchesByPuuid(String puuid){
 
         log.debug(puuid);
 
         String[] apiResult = matchService.callRiotAPIMatchesByPuuid(puuid);
 
-        return apiResult;
+        return new CommonResponse(HttpStatus.OK, "성공", apiResult);
     }
 }

@@ -2,9 +2,11 @@ package taaewoo.RiotDataPipeline.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import taaewoo.RiotDataPipeline.dto.CommonResponse;
 import taaewoo.RiotDataPipeline.dto.SummonerDTO;
 import taaewoo.RiotDataPipeline.service.SummonerService;
 
@@ -17,7 +19,7 @@ public class SummonerController {
 
     @PostMapping(value = "/summonerByName")
     @ResponseBody
-    public SummonerDTO callSummonerByName(String summonerName){
+    public CommonResponse callSummonerByName(String summonerName){
 
         summonerName = summonerName.replaceAll(" ","%20");
 
@@ -25,7 +27,7 @@ public class SummonerController {
 
         SummonerDTO apiResult = summonerService.callRiotAPISummonerByName(summonerName);
 
-        return apiResult;
+        return new CommonResponse(HttpStatus.OK, "성공", apiResult);
     }
 
 
