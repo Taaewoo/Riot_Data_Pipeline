@@ -9,28 +9,28 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
-import java.io.IOException;
-
 import taaewoo.RiotDataPipeline.dto.SummonerDTO;
+
+import java.io.IOException;
 
 @Service
 @PropertySource(ignoreResourceNotFound = false, value = "classpath:riotApiKey.properties")
-public class SummonerService {
+public class MatchService {
 
     private ObjectMapper objectMapper = new ObjectMapper();
 
     @Value("${riot.api.key}")
     private String mykey;
 
-    public SummonerDTO callRiotAPISummonerByName(String summonerName){
+    public String[] callRiotAPIMatchesByPuuid(String puuid) {
 
-        SummonerDTO result;
+        String[] result;
 
-        String serverUrl = "https://kr.api.riotgames.com";
+        String serverUrl = "https://asia.api.riotgames.com";
 
         try {
             HttpClient client = HttpClientBuilder.create().build();
-            HttpGet request = new HttpGet(serverUrl + "/lol/summoner/v4/summoners/by-name/" + summonerName + "?api_key=" + mykey);
+            HttpGet request = new HttpGet(serverUrl + "/lol/match/v5/matches/by-puuid/" + puuid + "/ids?start=0&count=100" + "&api_key=" + mykey);
 
             HttpResponse response = client.execute(request);
 
@@ -39,7 +39,7 @@ public class SummonerService {
             }
 
             HttpEntity entity = response.getEntity();
-            result = objectMapper.readValue(entity.getContent(), SummonerDTO.class);
+            result = objectMapper.readValue(entity.getContent(), String[].class);
 
         } catch (IOException e){
             e.printStackTrace();
