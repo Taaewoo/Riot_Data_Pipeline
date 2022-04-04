@@ -31,4 +31,19 @@ public class MatchController {
 
         return new CommonResponse(HttpStatus.OK, "성공", apiResult);
     }
+
+    @PostMapping(value = "/matchInfoByMatchID")
+    @ResponseBody
+    public CommonResponse callMatchInfoByMatchID(String matchID){
+
+        log.debug(matchID);
+
+        String[] apiResult = matchService.callRiotAPIMatchesByPuuid(matchID);
+
+        if(apiResult == null){
+            return new CommonResponse(HttpStatus.INTERNAL_SERVER_ERROR, "MatchService 내 에러 or API 실패");
+        }
+
+        return new CommonResponse(HttpStatus.OK, "성공", apiResult);
+    }
 }

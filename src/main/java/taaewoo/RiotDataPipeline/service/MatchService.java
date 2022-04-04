@@ -9,6 +9,7 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
+import taaewoo.RiotDataPipeline.dto.MatchDTO;
 import taaewoo.RiotDataPipeline.dto.SummonerDTO;
 
 import java.io.IOException;
@@ -17,12 +18,12 @@ import java.io.IOException;
 @PropertySource(ignoreResourceNotFound = false, value = "classpath:riotApiKey.properties")
 public class MatchService {
 
-    private ObjectMapper objectMapper = new ObjectMapper();
-
     @Value("${riot.api.key}")
     private String mykey;
 
     public String[] callRiotAPIMatchesByPuuid(String puuid) {
+
+        ObjectMapper objectMapper = new ObjectMapper();
 
         String[] result;
 
@@ -47,5 +48,11 @@ public class MatchService {
         }
 
         return result;
+    }
+
+    public MatchDTO callRiotAPIMatchesByMatchID(String matchID){
+
+
+        return null;
     }
 }
