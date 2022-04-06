@@ -23,7 +23,7 @@ public class MatchController {
 
         log.debug(puuid);
 
-        String[] apiResult = matchService.callRiotAPIMatchesByPuuid(puuid);
+        String apiResult = matchService.callRiotApiMatchesByPuuid(puuid);
 
         if(apiResult == null){
             return new CommonResponse(HttpStatus.INTERNAL_SERVER_ERROR, "MatchService 내 에러 or API 실패");
@@ -38,7 +38,22 @@ public class MatchController {
 
         log.debug(matchID);
 
-        String[] apiResult = matchService.callRiotAPIMatchesByPuuid(matchID);
+        String apiResult = matchService.callRiotApiMatchInfoByMatchID(matchID);
+
+        if(apiResult == null){
+            return new CommonResponse(HttpStatus.INTERNAL_SERVER_ERROR, "MatchService 내 에러 or API 실패");
+        }
+
+        return new CommonResponse(HttpStatus.OK, "성공", apiResult);
+    }
+
+    @PostMapping(value = "/matchTimelineByMatchID")
+    @ResponseBody
+    public CommonResponse callMatchTimelineByMatchID(String matchID){
+
+        log.debug(matchID);
+
+        String apiResult = matchService.callRiotApiMatchTimelineByMatchID(matchID);
 
         if(apiResult == null){
             return new CommonResponse(HttpStatus.INTERNAL_SERVER_ERROR, "MatchService 내 에러 or API 실패");
