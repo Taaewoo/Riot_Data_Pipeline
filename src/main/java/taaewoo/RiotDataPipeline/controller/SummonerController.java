@@ -25,7 +25,7 @@ public class SummonerController {
 
         log.debug(summonerName);
 
-        SummonerDTO apiResult = summonerService.callRiotAPISummonerByName(summonerName);
+        String apiResult = summonerService.callRiotAPISummonerByName(summonerName);
 
         if(apiResult == null){
             return new CommonResponse(HttpStatus.INTERNAL_SERVER_ERROR, "summonerService 내 에러 or API 실패");
