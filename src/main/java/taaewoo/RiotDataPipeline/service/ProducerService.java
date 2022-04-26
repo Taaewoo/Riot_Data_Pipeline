@@ -15,8 +15,6 @@ public class ProducerService {
 
     public String produceStringToKafka(String s) {
 
-        System.out.println(s);
-
         String topicName = "test2";
         String bootstrapServers = "localhost:19094";
 
@@ -32,8 +30,6 @@ public class ProducerService {
         producer.send(record);
         producer.flush();
         producer.close();
-
-        System.out.println(s);
 
         return "";
     }

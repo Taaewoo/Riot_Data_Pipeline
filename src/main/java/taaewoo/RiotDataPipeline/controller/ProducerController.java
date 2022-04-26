@@ -21,7 +21,6 @@ public class ProducerController {
     public CommonResponse produceString(String s){
 
         log.debug(s);
-        System.out.println("!!!" + s);
 
         String apiResult = producerService.produceStringToKafka(s);
 
