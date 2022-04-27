@@ -21,6 +21,8 @@ riot.api.key = RGAPI-xxxxx-xxxxx-xxxx
 
 ## Kafka cluster on docker
 [Platform Github](https://github.com/Taaewoo/Bigdata_Platform_on_Docker)
+
+### Kafka + Zookeeper
 ~~~
 $ git clone https://github.com/Taaewoo/Bigdata_Platform_on_Docker.git
 $ cd kafka
