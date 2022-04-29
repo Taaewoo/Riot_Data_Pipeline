@@ -11,9 +11,9 @@ import java.util.Properties;
 
 @Slf4j
 @Service
-public class ProducerService {
+public class KafkaProducerService {
 
-    public String produceStringToKafka(String s) {
+    public String sendRiotDataMessage(String s) {
 
         String topicName = "test2";
         String bootstrapServers = "localhost:19094";
