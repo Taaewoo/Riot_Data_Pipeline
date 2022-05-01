@@ -8,6 +8,9 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
@@ -28,6 +31,25 @@ public class SummonerService {
         String fullUrl = serverUrl + "/lol/summoner/v4/summoners/by-name/" + summonerName + "?api_key=" + mykey;
 
         return callRiotApi(fullUrl);
+    }
+
+    public String getSummonerPuuidByName(String summonerName) {
+        String serverUrl = "https://kr.api.riotgames.com";
+        String fullUrl = serverUrl + "/lol/summoner/v4/summoners/by-name/" + summonerName + "?api_key=" + mykey;
+
+        try {
+            JSONParser parser = new JSONParser();
+
+            JSONObject jsonObjectResult = (JSONObject) parser.parse(callRiotApi(fullUrl));
+
+            System.out.println(jsonObjectResult.get("puuid").toString());
+
+            return jsonObjectResult.get("puuid").toString();
+
+        }catch (ParseException e){
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public String callRiotApi(String url){
