@@ -56,6 +56,20 @@ public class ProducerController {
             return new CommonResponse(HttpStatus.INTERNAL_SERVER_ERROR, "MatchService 내 에러 or API 실패");
         }
 
+        for(String matchID : matchIDsList){
+
+            String matchInfo = matchService.callRiotApiMatchInfoByMatchID(matchID);
+            if(matchInfo == null){
+                log.debug("!!!!Data is Null");
+                continue;
+            }
+
+            String produceResult = producerService.sendRiotDataMessage(matchInfo);
+            if(produceResult == null){
+                log.debug(matchID + " Produce Fail");
+            }
+        }
+
         return new CommonResponse(HttpStatus.OK, "성공", matchIDsList);
     }
 }
