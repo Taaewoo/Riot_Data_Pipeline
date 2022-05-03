@@ -57,16 +57,22 @@ public class ProducerController {
         }
 
         for(String matchID : matchIDsList){
+            try {
+                Thread.sleep(1000);
+
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
 
             String matchInfo = matchService.callRiotApiMatchInfoByMatchID(matchID);
             if(matchInfo == null){
-                log.debug("!!!!Data is Null");
+                log.warn("Data is Null");
                 continue;
             }
 
             String produceResult = producerService.sendRiotDataMessage(matchInfo);
             if(produceResult == null){
-                log.debug(matchID + " Produce Fail");
+                log.error(matchID + " Produce Fail");
             }
         }
 
