@@ -42,8 +42,6 @@ public class SummonerService {
 
             JSONObject jsonObjectResult = (JSONObject) parser.parse(callRiotApi(fullUrl));
 
-            System.out.println(jsonObjectResult.get("puuid").toString());
-
             return jsonObjectResult.get("puuid").toString();
 
         }catch (ParseException e){
@@ -66,8 +64,6 @@ public class SummonerService {
             HttpEntity entity = response.getEntity();
 
             String result = EntityUtils.toString(entity);
-
-            log.debug(result);
 
             return result;
 

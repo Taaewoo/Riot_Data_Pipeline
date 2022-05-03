@@ -27,7 +27,7 @@ public class ProducerController {
     @ResponseBody
     public CommonResponse produceString(String s){
 
-        log.debug(s);
+        log.info(s);
 
         String apiResult = producerService.sendRiotDataMessage(s);
 
@@ -42,7 +42,7 @@ public class ProducerController {
     @ResponseBody
     public CommonResponse produceMatchInfoBySummonerName(String summonerName){
 
-        log.debug(summonerName);
+        log.info(summonerName);
 
         String summonerPuuid = summonerService.getSummonerPuuidByName(summonerName);
 

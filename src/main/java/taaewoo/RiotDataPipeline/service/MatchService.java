@@ -84,8 +84,6 @@ public class MatchService {
 
             String result = EntityUtils.toString(entity);
 
-            log.debug(result);
-
             return result;
 
         } catch (IOException e){
