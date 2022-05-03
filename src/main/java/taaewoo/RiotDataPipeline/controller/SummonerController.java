@@ -7,7 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import taaewoo.RiotDataPipeline.dto.CommonResponse;
-import taaewoo.RiotDataPipeline.dto.SummonerDTO;
 import taaewoo.RiotDataPipeline.service.SummonerService;
 
 @Slf4j
