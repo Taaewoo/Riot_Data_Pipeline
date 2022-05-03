@@ -8,11 +8,16 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 @Slf4j
 @Service
@@ -43,6 +48,27 @@ public class MatchService {
         return callRiotApi(fullUrl);
     }
 
+    public ArrayList<String> getMatchIDList(String puuid){
+        String apiResult = callRiotApiMatchesByPuuid(puuid);
+        ArrayList<String> matchIDsList = new ArrayList<>();
+
+        try {
+            JSONParser parser = new JSONParser();
+
+            JSONArray jsonArrayResult = (JSONArray) parser.parse(apiResult);
+
+            for(int i=0; i<jsonArrayResult.size(); i++){
+                matchIDsList.add(jsonArrayResult.get(i).toString());
+            }
+
+            return matchIDsList;
+
+        }catch (ParseException e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public String callRiotApi(String url){
         try {
             HttpClient client = HttpClientBuilder.create().build();
@@ -57,8 +83,6 @@ public class MatchService {
             HttpEntity entity = response.getEntity();
 
             String result = EntityUtils.toString(entity);
-
-            log.debug(result);
 
             return result;
 

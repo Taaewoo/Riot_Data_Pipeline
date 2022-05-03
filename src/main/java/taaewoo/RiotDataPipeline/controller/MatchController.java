@@ -21,7 +21,7 @@ public class MatchController {
     @ResponseBody
     public CommonResponse callMatchesByPuuid(String puuid){
 
-        log.debug(puuid);
+        log.info(puuid);
 
         String apiResult = matchService.callRiotApiMatchesByPuuid(puuid);
 
@@ -36,7 +36,7 @@ public class MatchController {
     @ResponseBody
     public CommonResponse callMatchInfoByMatchID(String matchID){
 
-        log.debug(matchID);
+        log.info(matchID);
 
         String apiResult = matchService.callRiotApiMatchInfoByMatchID(matchID);
 
@@ -51,7 +51,7 @@ public class MatchController {
     @ResponseBody
     public CommonResponse callMatchTimelineByMatchID(String matchID){
 
-        log.debug(matchID);
+        log.info(matchID);
 
         String apiResult = matchService.callRiotApiMatchTimelineByMatchID(matchID);
 
