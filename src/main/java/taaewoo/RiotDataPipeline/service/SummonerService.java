@@ -63,9 +63,7 @@ public class SummonerService {
 
             HttpEntity entity = response.getEntity();
 
-            String result = EntityUtils.toString(entity);
-
-            return result;
+            return EntityUtils.toString(entity);
 
         } catch (IOException e){
             e.printStackTrace();
