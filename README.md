@@ -19,7 +19,7 @@ $ vim src/main/resources/riotApiKey.properties
 riot.api.key = RGAPI-xxxxx-xxxxx-xxxx
 ~~~
 
-## Kafka cluster on docker
+## Kafka Cluster on docker
 [Platform Github](https://github.com/Taaewoo/Bigdata_Platform_on_Docker)
 
 ### Kafka + Zookeeper
