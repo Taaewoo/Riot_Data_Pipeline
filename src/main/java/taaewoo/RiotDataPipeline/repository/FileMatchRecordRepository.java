@@ -37,12 +37,16 @@ public class FileMatchRecordRepository implements MatchRecordRepository {
     @Override
     public void updateMatchRecord(String summonerName, List<String> updatedMatchList) {
 
+        if(!matchList.containsKey(summonerName)){
+            matchList.put(summonerName, new LinkedList<String>());
+        }
+
         updatedMatchList.addAll(matchList.get(summonerName));
         matchList.put(summonerName,(LinkedList<String>) updatedMatchList);
 
         try {
             String updatedMatchRecord = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(matchList);
-            System.out.println(updatedMatchRecord);
+            log.info(updatedMatchRecord);
 
             FileWriter file = new FileWriter(resource.getFile().getAbsoluteFile());
             file.write(updatedMatchRecord);
@@ -56,6 +60,10 @@ public class FileMatchRecordRepository implements MatchRecordRepository {
 
     @Override
     public String getLastMatchID(String summonerName) {
+        if(!matchList.containsKey(summonerName)){
+            return "";
+        }
+
         return matchList.get(summonerName).get(0);
     }
 
