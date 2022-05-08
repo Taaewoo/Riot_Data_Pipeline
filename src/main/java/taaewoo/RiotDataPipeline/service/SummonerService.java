@@ -1,6 +1,5 @@
 package taaewoo.RiotDataPipeline.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -16,8 +15,6 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 import java.io.IOException;
 
-import taaewoo.RiotDataPipeline.dto.SummonerDTO;
-
 @Slf4j
 @Service
 @PropertySource(ignoreResourceNotFound = false, value = "classpath:riotApiKey.properties")
@@ -28,14 +25,14 @@ public class SummonerService {
 
     public String callRiotAPISummonerByName(String summonerName){
         String serverUrl = "https://kr.api.riotgames.com";
-        String fullUrl = serverUrl + "/lol/summoner/v4/summoners/by-name/" + summonerName + "?api_key=" + mykey;
+        String fullUrl = serverUrl + "/lol/summoner/v4/summoners/by-name/" + summonerName.replaceAll(" ","%20") + "?api_key=" + mykey;
 
         return callRiotApi(fullUrl);
     }
 
     public String getSummonerPuuidByName(String summonerName) {
         String serverUrl = "https://kr.api.riotgames.com";
-        String fullUrl = serverUrl + "/lol/summoner/v4/summoners/by-name/" + summonerName + "?api_key=" + mykey;
+        String fullUrl = serverUrl + "/lol/summoner/v4/summoners/by-name/" + summonerName.replaceAll(" ","%20") + "?api_key=" + mykey;
 
         try {
             JSONParser parser = new JSONParser();

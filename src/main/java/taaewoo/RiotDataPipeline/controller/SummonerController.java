@@ -20,8 +20,6 @@ public class SummonerController {
     @ResponseBody
     public CommonResponse callSummonerByName(String summonerName){
 
-        summonerName = summonerName.replaceAll(" ","%20");
-
         log.info(summonerName);
 
         String apiResult = summonerService.callRiotAPISummonerByName(summonerName);
