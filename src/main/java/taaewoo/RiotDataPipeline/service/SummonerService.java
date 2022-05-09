@@ -7,6 +7,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -23,28 +24,26 @@ public class SummonerService {
     @Value("${riot.api.key}")
     private String mykey;
 
-    public String callRiotAPISummonerByName(String summonerName){
+    private JSONParser parser = new JSONParser();
+
+
+    public JSONObject callRiotAPISummonerByName(String summonerName){
         String serverUrl = "https://kr.api.riotgames.com";
         String fullUrl = serverUrl + "/lol/summoner/v4/summoners/by-name/" + summonerName.replaceAll(" ","%20") + "?api_key=" + mykey;
-
-        return callRiotApi(fullUrl);
-    }
-
-    public String getSummonerPuuidByName(String summonerName) {
-        String serverUrl = "https://kr.api.riotgames.com";
-        String fullUrl = serverUrl + "/lol/summoner/v4/summoners/by-name/" + summonerName.replaceAll(" ","%20") + "?api_key=" + mykey;
+        String apiResult = callRiotApi(fullUrl);
 
         try {
-            JSONParser parser = new JSONParser();
+            return (JSONObject) parser.parse(apiResult);
 
-            JSONObject jsonObjectResult = (JSONObject) parser.parse(callRiotApi(fullUrl));
-
-            return jsonObjectResult.get("puuid").toString();
-
-        }catch (ParseException e){
+        } catch (ParseException e) {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public String getSummonerPuuidByName(String summonerName) {
+
+        return callRiotAPISummonerByName(summonerName).get("puuid").toString();
     }
 
     public String callRiotApi(String url){

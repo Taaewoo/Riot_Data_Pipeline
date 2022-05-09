@@ -2,6 +2,7 @@ package taaewoo.RiotDataPipeline.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.json.simple.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,9 +31,9 @@ public class ProducerController {
 
     @PostMapping(value = "/produceString")
     @ResponseBody
-    public CommonResponse produceString(String s){
+    public CommonResponse produceString(JSONObject s){
 
-        log.info(s);
+        log.info(s.toString());
 
         String apiResult = producerService.sendRiotDataMessage(s);
 
@@ -54,7 +55,7 @@ public class ProducerController {
             return new CommonResponse(HttpStatus.INTERNAL_SERVER_ERROR, "SummonerService 내 에러 or API 실패");
         }
 
-        ArrayList<String> matchIDsList = matchService.getMatchIDList(summonerPuuid);
+        List<String> matchIDsList = matchService.getMatchIDList(summonerPuuid);
         if(matchIDsList == null){
             return new CommonResponse(HttpStatus.INTERNAL_SERVER_ERROR, "MatchService 내 에러 or API 실패");
         }
@@ -77,7 +78,7 @@ public class ProducerController {
                 e.printStackTrace();
             }
 
-            String matchInfo = matchService.callRiotApiMatchInfoByMatchID(matchID);
+            JSONObject matchInfo = matchService.callRiotApiMatchInfoByMatchID(matchID);
             if(matchInfo == null){
                 log.warn("Data is Null");
                 continue;
@@ -91,7 +92,7 @@ public class ProducerController {
             updatedMatchList.add(matchID);
         }
 
-        log.info(updatedMatchList.toString());
+        log.info("New Match IDs : " + updatedMatchList.toString());
         matchRecordRepository.updateMatchRecord(summonerName, updatedMatchList);
 
         return new CommonResponse(HttpStatus.OK, "성공", updatedMatchList);

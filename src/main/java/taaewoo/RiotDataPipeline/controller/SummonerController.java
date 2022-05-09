@@ -2,10 +2,10 @@ package taaewoo.RiotDataPipeline.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.json.simple.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
 import taaewoo.RiotDataPipeline.dto.CommonResponse;
 import taaewoo.RiotDataPipeline.service.SummonerService;
 
@@ -22,7 +22,7 @@ public class SummonerController {
 
         log.info(summonerName);
 
-        String apiResult = summonerService.callRiotAPISummonerByName(summonerName);
+        JSONObject apiResult = summonerService.callRiotAPISummonerByName(summonerName);
 
         if(apiResult == null){
             return new CommonResponse(HttpStatus.INTERNAL_SERVER_ERROR, "summonerService 내 에러 or API 실패");
@@ -30,6 +30,4 @@ public class SummonerController {
 
         return new CommonResponse(HttpStatus.OK, "성공", apiResult);
     }
-
-
 }
