@@ -13,8 +13,8 @@ public class SpringProducerService {
     private KafkaTemplate<String, String> kafkaTemplate;
 
     public String sendRiotDataMessage(String riotData) {
-        log.info(riotData);
-        this.kafkaTemplate.send("test2", riotData);
+
+        this.kafkaTemplate.send("test3", riotData);
 
         return "success";
     }
