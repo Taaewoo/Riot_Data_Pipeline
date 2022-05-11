@@ -41,8 +41,11 @@ public class FileMatchRecordRepository implements MatchRecordRepository {
             matchList.put(summonerName, new LinkedList<String>());
         }
 
-        updatedMatchList.addAll(matchList.get(summonerName));
-        matchList.put(summonerName,(LinkedList<String>) updatedMatchList);
+        List<String> allMatchList = new LinkedList<String>();
+
+        allMatchList.addAll(updatedMatchList);
+        allMatchList.addAll(matchList.get(summonerName));
+        matchList.put(summonerName,(LinkedList<String>) allMatchList);
 
         try {
             String updatedMatchRecord = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(matchList);
