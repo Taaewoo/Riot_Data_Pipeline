@@ -19,6 +19,11 @@ $ vim src/main/resources/riotApiKey.properties
 riot.api.key = RGAPI-xxxxx-xxxxx-xxxx
 ~~~
 
+## Json 파일 생성
+~~~
+$ vim src/main/resources/json/matchRecord.json
+~~~
+
 ## Kafka Cluster on docker
 [Platform Github](https://github.com/Taaewoo/Bigdata_Platform_on_Docker)
 
