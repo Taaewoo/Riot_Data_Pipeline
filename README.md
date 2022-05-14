@@ -14,7 +14,9 @@ $ git clone https://github.com/Taaewoo/Riot_Data_Pipeline.git
 ~~~
 $ vim src/main/resources/riotApiKey.properties
 ~~~
-"riotApiKey.properties" 파일에 아래 내용을 본인 Riot API 넣어서 작성
+"riotApiKey.properties" 파일에 아래 내용을 본인 Riot API 넣어서 작성.
+
+https://developer.riotgames.com/ 해당 링크에서 Key 발급 가능.
 ~~~
 riot.api.key = RGAPI-xxxxx-xxxxx-xxxx
 ~~~
