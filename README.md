@@ -22,6 +22,7 @@ riot.api.key = RGAPI-xxxxx-xxxxx-xxxx
 ~~~
 
 ## Json 파일 생성
+Kafka로 이미 전달된 Match ID를 기록하는 파일
 ~~~
 $ vim src/main/resources/json/matchRecord.json
 ~~~
