@@ -60,7 +60,9 @@ public class ProducerController {
             return new CommonResponse(HttpStatus.INTERNAL_SERVER_ERROR, "MatchService 내 에러 or API 실패");
         }
 
-        matchRecordRepository.loadMatchRecord();
+        if(!matchRecordRepository.loadMatchRecord()){
+            return new CommonResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Match record json 파일 로드 실패.");
+        }
 
         String lastMatchID = matchRecordRepository.getLastMatchID(summonerName);
         log.info("Summoner Name : " + summonerName);

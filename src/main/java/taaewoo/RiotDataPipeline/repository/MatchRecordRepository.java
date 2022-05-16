@@ -7,7 +7,7 @@ import java.util.Map;
 
 public interface MatchRecordRepository {
 
-    void loadMatchRecord();
+    boolean loadMatchRecord();
 
     void updateMatchRecord(String summonerName, List<String> updatedMatchList);
 

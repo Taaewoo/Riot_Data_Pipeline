@@ -17,20 +17,27 @@ import java.util.*;
 public class FileMatchRecordRepository implements MatchRecordRepository {
 
     private ObjectMapper objectMapper = new ObjectMapper();
-    private ClassPathResource resource = new ClassPathResource("json/matchRecord.json");
+    private String jsonPath = "json/matchRecord.json";
+    private ClassPathResource resource = new ClassPathResource(jsonPath);
 
     private JSONObject matchRecordJsonObj;
     private Map<String, LinkedList<String>> matchList;
 
     @Override
-    public void loadMatchRecord() {
+    public boolean loadMatchRecord() {
         try {
+            if(!resource.exists()){
+                log.error("Json file(" + jsonPath + ") does not exist.");
+                return false;
+            }
             matchRecordJsonObj = (JSONObject) new JSONParser().parse(new InputStreamReader(resource.getInputStream(), "UTF-8"));
 
             matchList = objectMapper.readValue(matchRecordJsonObj.toString(), new TypeReference<Map<String,LinkedList<String>>>() {});
 
+            return true;
         } catch (IOException | ParseException e) {
             e.printStackTrace();
+            return false;
         }
     }
 
