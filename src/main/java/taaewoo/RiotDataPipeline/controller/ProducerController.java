@@ -31,11 +31,11 @@ public class ProducerController {
 
     @PostMapping(value = "/produceString")
     @ResponseBody
-    public CommonResponse produceString(JSONObject s){
+    public CommonResponse produceString(String summonerName, JSONObject jsonObject){
 
-        log.info(s.toString());
+        log.info(jsonObject.toString());
 
-        String apiResult = producerService.sendRiotDataMessage(s);
+        String apiResult = producerService.sendRiotDataMessage(summonerName, jsonObject);
 
         if(apiResult == null){
             return new CommonResponse(HttpStatus.INTERNAL_SERVER_ERROR, "MatchService 내 에러 or API 실패");
@@ -86,7 +86,7 @@ public class ProducerController {
                 continue;
             }
 
-            String produceResult = producerService.sendRiotDataMessage(matchInfo);
+            String produceResult = producerService.sendRiotDataMessage(summonerName, matchInfo);
             if(produceResult == null){
                 log.error(matchID + " Produce Fail");
             }

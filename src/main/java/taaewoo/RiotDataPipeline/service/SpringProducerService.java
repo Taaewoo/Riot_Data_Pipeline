@@ -11,11 +11,15 @@ import org.springframework.stereotype.Service;
 public class SpringProducerService {
 
     @Autowired
-    private KafkaTemplate<String, String> kafkaTemplate;
+    private KafkaTemplate<String, JSONObject> kafkaTemplate;
 
-    public String sendRiotDataMessage(JSONObject riotData) {
+    public String sendRiotDataMessage(String summonerName, JSONObject riotData) {
 
-        this.kafkaTemplate.send("test3", riotData.toJSONString());
+        riotData.put("whoseMatch", summonerName);
+
+        System.out.println(riotData);
+
+        this.kafkaTemplate.send("summoner-match", riotData);
 
         return "success";
     }
