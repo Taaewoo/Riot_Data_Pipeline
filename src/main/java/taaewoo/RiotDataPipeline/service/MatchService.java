@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -27,46 +28,60 @@ public class MatchService {
     @Value("${riot.api.key}")
     private String mykey;
 
-    public String callRiotApiMatchesByPuuid(String puuid) {
+    private JSONParser parser = new JSONParser();
+
+
+    public JSONArray callRiotApiMatchesByPuuid(String puuid) {
         String serverUrl = "https://asia.api.riotgames.com";
         String fullUrl = serverUrl + "/lol/match/v5/matches/by-puuid/" + puuid + "/ids?start=0&count=100" + "&api_key=" + mykey;
-
-        return callRiotApi(fullUrl);
-    }
-
-    public String callRiotApiMatchInfoByMatchID(String matchID){
-        String serverUrl = "https://asia.api.riotgames.com";
-        String fullUrl = serverUrl + "/lol/match/v5/matches/" + matchID + "?api_key=" + mykey;
-
-        return callRiotApi(fullUrl);
-    }
-
-    public String callRiotApiMatchTimelineByMatchID(String matchID){
-        String serverUrl = "https://asia.api.riotgames.com";
-        String fullUrl = serverUrl + "/lol/match/v5/matches/" + matchID + "/timeline?api_key=" + mykey;
-
-        return callRiotApi(fullUrl);
-    }
-
-    public ArrayList<String> getMatchIDList(String puuid){
-        String apiResult = callRiotApiMatchesByPuuid(puuid);
-        ArrayList<String> matchIDsList = new ArrayList<>();
+        String apiResult = callRiotApi(fullUrl);
 
         try {
-            JSONParser parser = new JSONParser();
+            return (JSONArray) parser.parse(apiResult);
 
-            JSONArray jsonArrayResult = (JSONArray) parser.parse(apiResult);
-
-            for(int i=0; i<jsonArrayResult.size(); i++){
-                matchIDsList.add(jsonArrayResult.get(i).toString());
-            }
-
-            return matchIDsList;
-
-        }catch (ParseException e){
+        } catch (ParseException e) {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public JSONObject callRiotApiMatchInfoByMatchID(String matchID){
+        String serverUrl = "https://asia.api.riotgames.com";
+        String fullUrl = serverUrl + "/lol/match/v5/matches/" + matchID + "?api_key=" + mykey;
+        String apiResult = callRiotApi(fullUrl);
+
+        try {
+            return (JSONObject) parser.parse(apiResult);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public JSONObject callRiotApiMatchTimelineByMatchID(String matchID){
+        String serverUrl = "https://asia.api.riotgames.com";
+        String fullUrl = serverUrl + "/lol/match/v5/matches/" + matchID + "/timeline?api_key=" + mykey;
+        String apiResult = callRiotApi(fullUrl);
+
+        try {
+            return (JSONObject) parser.parse(apiResult);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public List<String> getMatchIDList(String puuid){
+        JSONArray jsonArrayResult = callRiotApiMatchesByPuuid(puuid);
+        ArrayList<String> matchIDsList = new ArrayList<>();
+
+        for (int i = 0; i < jsonArrayResult.size(); i++) {
+            matchIDsList.add(jsonArrayResult.get(i).toString());
+        }
+
+        return matchIDsList;
     }
 
     public String callRiotApi(String url){
@@ -82,9 +97,7 @@ public class MatchService {
 
             HttpEntity entity = response.getEntity();
 
-            String result = EntityUtils.toString(entity);
-
-            return result;
+            return EntityUtils.toString(entity);
 
         } catch (IOException e){
             e.printStackTrace();

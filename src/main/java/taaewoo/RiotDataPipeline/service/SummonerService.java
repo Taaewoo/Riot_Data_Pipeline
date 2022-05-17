@@ -1,6 +1,5 @@
 package taaewoo.RiotDataPipeline.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -16,8 +15,6 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 import java.io.IOException;
 
-import taaewoo.RiotDataPipeline.dto.SummonerDTO;
-
 @Slf4j
 @Service
 @PropertySource(ignoreResourceNotFound = false, value = "classpath:riotApiKey.properties")
@@ -26,28 +23,26 @@ public class SummonerService {
     @Value("${riot.api.key}")
     private String mykey;
 
-    public String callRiotAPISummonerByName(String summonerName){
-        String serverUrl = "https://kr.api.riotgames.com";
-        String fullUrl = serverUrl + "/lol/summoner/v4/summoners/by-name/" + summonerName + "?api_key=" + mykey;
+    private JSONParser parser = new JSONParser();
 
-        return callRiotApi(fullUrl);
-    }
 
-    public String getSummonerPuuidByName(String summonerName) {
+    public JSONObject callRiotAPISummonerByName(String summonerName){
         String serverUrl = "https://kr.api.riotgames.com";
-        String fullUrl = serverUrl + "/lol/summoner/v4/summoners/by-name/" + summonerName + "?api_key=" + mykey;
+        String fullUrl = serverUrl + "/lol/summoner/v4/summoners/by-name/" + summonerName.replaceAll(" ","%20") + "?api_key=" + mykey;
+        String apiResult = callRiotApi(fullUrl);
 
         try {
-            JSONParser parser = new JSONParser();
+            return (JSONObject) parser.parse(apiResult);
 
-            JSONObject jsonObjectResult = (JSONObject) parser.parse(callRiotApi(fullUrl));
-
-            return jsonObjectResult.get("puuid").toString();
-
-        }catch (ParseException e){
+        } catch (ParseException e) {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public String getSummonerPuuidByName(String summonerName) {
+
+        return callRiotAPISummonerByName(summonerName).get("puuid").toString();
     }
 
     public String callRiotApi(String url){
@@ -63,9 +58,7 @@ public class SummonerService {
 
             HttpEntity entity = response.getEntity();
 
-            String result = EntityUtils.toString(entity);
-
-            return result;
+            return EntityUtils.toString(entity);
 
         } catch (IOException e){
             e.printStackTrace();
