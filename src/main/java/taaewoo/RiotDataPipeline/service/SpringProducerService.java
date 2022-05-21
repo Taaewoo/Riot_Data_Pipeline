@@ -17,8 +17,6 @@ public class SpringProducerService {
 
         riotData.put("whoseMatch", summonerName);
 
-        System.out.println(riotData);
-
         this.kafkaTemplate.send("summoner-match", riotData);
 
         return "success";
