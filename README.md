@@ -27,7 +27,7 @@ Kafka로 이미 전달된 Match ID를 기록하는 json 파일
 $ vim src/main/resources/json/matchRecord.json
 ~~~
 
-## Kafka Cluster on docker
+## Bigdata Cluster on docker
 [Platform Github](https://github.com/Taaewoo/Bigdata_Platform_on_Docker)
 
 ### Kafka + Zookeeper
