@@ -39,6 +39,7 @@ $ docker compose up -d
 
 ### Airflow
 ~~~
+$ git clone https://github.com/Taaewoo/Bigdata_Platform_on_Docker.git
 $ cd airflow
 $ mkdir ./dags ./logs ./plugins
 $ echo -e "AIRFLOW_UID=$(id -u)\nAIRFLOW_GID=0" > .env
