@@ -38,6 +38,7 @@ $ docker compose up -d
 ~~~
 
 ### Airflow
+- Airflow Web : [http:localhost:18080](http:localhost:18080)
 ~~~
 $ git clone https://github.com/Taaewoo/Bigdata_Platform_on_Docker.git
 $ cd airflow
