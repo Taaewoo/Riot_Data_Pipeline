@@ -31,6 +31,7 @@ $ vim src/main/resources/json/matchRecord.json
 [Platform Github](https://github.com/Taaewoo/Bigdata_Platform_on_Docker)
 
 ### Kafka + Zookeeper
+- Kafka Manager Web : [http:localhost:9000](http:localhost:9000)
 ~~~
 $ git clone https://github.com/Taaewoo/Bigdata_Platform_on_Docker.git
 $ cd kafka
