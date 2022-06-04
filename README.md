@@ -33,16 +33,14 @@ $ vim src/main/resources/json/matchRecord.json
 ### Kafka + Zookeeper
 - Kafka Manager Web : [http:localhost:9000](http:localhost:9000)
 ~~~
-$ git clone https://github.com/Taaewoo/Bigdata_Platform_on_Docker.git
-$ cd kafka
+$ cd platform/kafka
 $ docker compose up -d
 ~~~
 
 ### Airflow
 - Airflow Web : [http:localhost:18080](http:localhost:18080)
 ~~~
-$ git clone https://github.com/Taaewoo/Bigdata_Platform_on_Docker.git
-$ cd airflow
+$ cd platform/airflow
 $ mkdir ./dags ./logs ./plugins
 $ echo -e "AIRFLOW_UID=$(id -u)\nAIRFLOW_GID=0" > .env
 $ docker-compose up airflow-init
