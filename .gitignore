@@ -39,3 +39,8 @@ out/
 
 #Riot API Key
 riotApiKey.properties
+
+# Platform
+platform/airflow/logs/*
+!platform/airflow/logs/README.md
+platform/airflow/plugins/*
