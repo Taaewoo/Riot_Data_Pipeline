@@ -22,14 +22,16 @@ public class SummonerService {
 
     @Value("${riot.api.key}")
     private String mykey;
-
     private JSONParser parser = new JSONParser();
-
 
     public JSONObject callRiotAPISummonerByName(String summonerName){
         String serverUrl = "https://kr.api.riotgames.com";
         String fullUrl = serverUrl + "/lol/summoner/v4/summoners/by-name/" + summonerName.replaceAll(" ","%20") + "?api_key=" + mykey;
         String apiResult = callRiotApi(fullUrl);
+
+        if(apiResult == null){
+            return null;
+        }
 
         try {
             return (JSONObject) parser.parse(apiResult);
@@ -42,7 +44,12 @@ public class SummonerService {
 
     public String getSummonerPuuidByName(String summonerName) {
 
-        return callRiotAPISummonerByName(summonerName).get("puuid").toString();
+        JSONObject summonerInfo = callRiotAPISummonerByName(summonerName);
+        if(summonerInfo == null){
+            return null;
+        }
+
+        return summonerInfo.get("puuid").toString();
     }
 
     public String callRiotApi(String url){

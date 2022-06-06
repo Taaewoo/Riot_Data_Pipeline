@@ -36,6 +36,10 @@ public class MatchService {
         String fullUrl = serverUrl + "/lol/match/v5/matches/by-puuid/" + puuid + "/ids?start=0&count=100" + "&api_key=" + mykey;
         String apiResult = callRiotApi(fullUrl);
 
+        if(apiResult == null){
+            return null;
+        }
+
         try {
             return (JSONArray) parser.parse(apiResult);
 
@@ -49,6 +53,10 @@ public class MatchService {
         String serverUrl = "https://asia.api.riotgames.com";
         String fullUrl = serverUrl + "/lol/match/v5/matches/" + matchID + "?api_key=" + mykey;
         String apiResult = callRiotApi(fullUrl);
+
+        if(apiResult == null){
+            return null;
+        }
 
         try {
             return (JSONObject) parser.parse(apiResult);
@@ -64,6 +72,10 @@ public class MatchService {
         String fullUrl = serverUrl + "/lol/match/v5/matches/" + matchID + "/timeline?api_key=" + mykey;
         String apiResult = callRiotApi(fullUrl);
 
+        if(apiResult == null){
+            return null;
+        }
+
         try {
             return (JSONObject) parser.parse(apiResult);
 
@@ -76,6 +88,10 @@ public class MatchService {
     public List<String> getMatchIDList(String puuid){
         JSONArray jsonArrayResult = callRiotApiMatchesByPuuid(puuid);
         ArrayList<String> matchIDsList = new ArrayList<>();
+
+        if(jsonArrayResult == null){
+            return null;
+        }
 
         for (int i = 0; i < jsonArrayResult.size(); i++) {
             matchIDsList.add(jsonArrayResult.get(i).toString());
