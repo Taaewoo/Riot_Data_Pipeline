@@ -56,7 +56,7 @@ public class FileMatchRecordRepository implements MatchRecordRepository {
 
         try {
             String updatedMatchRecord = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(matchList);
-            log.info(updatedMatchRecord);
+            //log.info(updatedMatchRecord);
 
             FileWriter file = new FileWriter(resource.getFile().getAbsoluteFile());
             file.write(updatedMatchRecord);
