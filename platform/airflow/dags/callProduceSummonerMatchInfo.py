@@ -15,8 +15,8 @@ default_args = {
 
 dag = DAG(
     'produce_summoner_match_info2',
-    start_date=datetime(2022, 6, 4, tzinfo=kst),
-    schedule_interval="0 0 * * *",
+    start_date=datetime(2022, 6, 6, tzinfo=kst),
+    schedule_interval="0 * * * *",
 )
 
 def callProduceSummonerMatchInfoApi():
