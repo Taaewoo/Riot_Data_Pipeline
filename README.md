@@ -48,7 +48,7 @@ $ docker compose up -d
 
 ### Spark + HDFS
 ~~~
-$ cd spark
+$ cd platform/spark
 $ mkdir -p data/namenode
 $ mkdir -p data/datanode
 $ mkdir -p spark_dir
