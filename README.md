@@ -45,3 +45,12 @@ $ echo -e "AIRFLOW_UID=$(id -u)\nAIRFLOW_GID=0" > .env
 $ docker-compose up airflow-init
 $ docker compose up -d
 ~~~
+
+### Spark + HDFS
+~~~
+$ cd spark
+$ mkdir -p data/namenode
+$ mkdir -p data/datanode
+$ mkdir -p spark_dir
+$ docker compose up -d
+~~~
