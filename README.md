@@ -47,6 +47,7 @@ $ docker compose up -d
 ~~~
 
 ### Spark + HDFS
+- Spark Master Web : [http:localhost:8082](http:localhost:8082)
 ~~~
 $ cd platform/spark
 $ mkdir -p data/namenode
