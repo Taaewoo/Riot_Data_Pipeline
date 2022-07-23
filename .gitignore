@@ -40,7 +40,12 @@ out/
 #Riot API Key
 riotApiKey.properties
 
+# match record json file
+src/main/resources/json/matchRecord.json
+
 # Platform
 platform/airflow/logs/*
 !platform/airflow/logs/README.md
 platform/airflow/plugins/*
+!platform/airflow/plugins/README.md
+platform/airflow/dags/__pycache__
