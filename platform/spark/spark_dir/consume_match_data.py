@@ -11,6 +11,8 @@ log = sc.readStream.format("kafka") \
 .option("startingOffsets", "earliest") \
 .load()
 
+log.printSchema()
+
 # Write stream - console
 query = log.selectExpr("CAST(value AS STRING)") \
 .writeStream \
