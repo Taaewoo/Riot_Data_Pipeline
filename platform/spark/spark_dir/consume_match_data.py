@@ -27,13 +27,6 @@ log2 = ss.read.format("kafka") \
 print("**Read Kafka topic schema")
 log2.printSchema()
 
-#json_data = log.selectExpr("CAST(value AS STRING)") \
-#.writeStream \
-#.queryName("riot_json") \
-#.format("memory") \
-#.outputMode("append") \
-#.start() 
-
 log2_df = log2.selectExpr("CAST(value AS STRING)") \
 
 value_collect = log2_df.collect()
@@ -57,13 +50,3 @@ print(pretty.decode('unicode_escape'))
 #enc_json["info"]["participants"][1]["summonerName"].encode('utf-8') == {summonerName} 
 #True
 
-
-
-# Write stream - console
-#query = log.selectExpr("CAST(value AS STRING)") \
-#.writeStream \
-#.format("console") \
-#.option("truncate", "false") \
-#.start()
-
-#print(json_data.dtypes)
