@@ -6,6 +6,9 @@ import json
 
 spark.sparkContext.setLogLevel('ERROR')
 
+json_schema = spark.read.json("/riot/sample_one_data").schema
+
+
 # Read stream
 log = spark.readStream.format("kafka") \
 .option("kafka.bootstrap.servers", "host.docker.internal:19096,host.docker.internal:29096,host.docker.internal:39096") \
@@ -15,6 +18,36 @@ log = spark.readStream.format("kafka") \
 
 print("**ReadStream Kafka topic schema")
 log.printSchema()
+
+log_val_df = log.select(from_json(col("value").cast("string"), json_schema).alias("parsed_value"))
+
+log_val_parsed_df = log_val_df.select(col("parsed_value.*"))
+
+log_val_parsed_info_df = log_val_parsed_df.select(col("info.*"))
+
+log_val_parsed_info_df = log_val_parsed_df.select(col("info.*")).drop(col("participants"))
+
+log_val_parsed_info_participants_df = log_val_parsed_info_df.select(col("participants"))
+
+log_val_parsed_info_participant_df = log_val_parsed_info_df.select(col("participants")[0])
+
+query = log_val_parsed_df \
+.writeStream \
+.format("console") \
+.option("truncate", "false") \
+.start()
+
+query = log_val_parsed_info_df \
+.writeStream \
+.format("console") \
+.option("truncate", "false") \
+.start()
+
+query = log_val_parsed_info_participants_df \
+.writeStream \
+.format("console") \
+.option("truncate", "false") \
+.start()
 
 
 log2 = spark.read.format("kafka") \
@@ -33,7 +66,7 @@ log2.printSchema()
 #.outputMode("append") \
 #.start() 
 
-log2_df = log2.selectExpr("CAST(value AS STRING)") \
+log2_df = log2.selectExpr("CAST(value AS STRING)")
 
 value_collect = log2_df.collect()
 
