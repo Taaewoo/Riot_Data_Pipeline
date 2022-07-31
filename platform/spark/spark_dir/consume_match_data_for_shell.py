@@ -19,6 +19,16 @@ log = spark.readStream.format("kafka") \
 print("**ReadStream Kafka topic schema")
 log.printSchema()
 
+
+participants_col = log.select(from_json(col("value").cast("string"), json_schema).alias("parsed_value")).select(col("parsed_value.*")).select(col("info.participants"))
+
+participants1_col = participants_col.select(participants_col.participants[0])
+
+participants1_col.select(col("participants[0].*")) \
+    .writeStream.format("console").start()
+
+
+
 log_val_df = log.select(from_json(col("value").cast("string"), json_schema).alias("parsed_value"))
 
 log_val_parsed_df = log_val_df.select(col("parsed_value.*"))
@@ -30,6 +40,9 @@ log_val_parsed_info_df = log_val_parsed_df.select(col("info.*")).drop(col("parti
 log_val_parsed_info_participants_df = log_val_parsed_info_df.select(col("participants"))
 
 log_val_parsed_info_participant_df = log_val_parsed_info_df.select(col("participants")[0])
+
+
+
 
 query = log_val_parsed_df \
 .writeStream \
