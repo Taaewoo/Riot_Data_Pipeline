@@ -20,11 +20,17 @@ print("**ReadStream Kafka topic schema")
 log.printSchema()
 
 
-participants_col = log.select(from_json(col("value").cast("string"), json_schema).alias("parsed_value")).select(col("parsed_value.*")).select(col("info.participants"))
+participants_col = log.select(from_json(col("value").cast("string"), json_schema) \
+    .alias("parsed_value")) \
+    .select(col("parsed_value.*")) \
+    .select(col("info.participants"))
 
 participants1_col = participants_col.select(participants_col.participants[0])
 
 participants1_col.select(col("participants[0].*")) \
+    .writeStream.format("console").start()
+
+participants1_col.select(col("participants[0].summonerName")) \
     .writeStream.format("console").start()
 
 
