@@ -22,4 +22,13 @@ print("**ReadStream Kafka topic schema")
 log.printSchema()
 
 
-participants_col = log.select(from_json(col("value").cast("string"), json_schema).alias("parsed_value"))
+parsed_df = log.select(from_json(col("value").cast("string"), json_schema) \
+    .alias("parsed_value")).select(col("parsed_value.*"))
+
+query = parsed_df \
+.writeStream \
+.format("json") \
+.option("checkpointLocation", "/check_match4") \
+.option("path", "/riot/riot_data4/whose=aaa") \
+.option("maxRecordsPerFile", 1) \
+.start()
